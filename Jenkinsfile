@@ -5,9 +5,9 @@ pipeline {
     stages {
         stage('Install Dependencies'){
             steps{
-                sh 'apt install python3'
-                sh 'pip install --upgrade pip'
-		        sh 'pip install -r requirements.txt'
+                sh 'sudo apt install python3'
+                sh 'sudo pip install --upgrade pip'
+		        sh 'sudo pip install -r requirements.txt'
                 sh 'wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64'
                 sh 'chmod +x ./hadolint'
             }
