@@ -1,20 +1,18 @@
 pipeline {
     agent any
-
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage('Build files'){
+        stage('Install Dependencies'){
             steps{
-                echo 'build'
+                pip install --upgrade pip
+		        pip install -r requirements.txt
+                wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64 &&\
+                chmod +x ./hadolint
             }
         }
         stage('Lint'){
             steps{
-                echo 'lint'
+                ./hadolint Dockerfile
+                pylint --disable=R,C,W1203 app.py
             }
         }
         stage('Build Docker'){
