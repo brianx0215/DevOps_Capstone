@@ -3,16 +3,16 @@ pipeline {
     stages {
         stage('Install Dependencies'){
             steps{
-                pip install --upgrade pip
-		        pip install -r requirements.txt
-                wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64 &&\
-                chmod +x ./hadolint
+                sh 'pip install --upgrade pip'
+		        sh 'pip install -r requirements.txt'
+                sh 'wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64'
+                sh 'chmod +x ./hadolint'
             }
         }
-        stage('Lint'){
+        stage('Lint Files'){
             steps{
-                ./hadolint Dockerfile
-                pylint --disable=R,C,W1203 app.py
+                sh './hadolint Dockerfile'
+                sh 'pylint --disable=R,C,W1203 app.py'
             }
         }
         stage('Build Docker'){
