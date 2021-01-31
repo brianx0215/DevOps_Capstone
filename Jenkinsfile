@@ -1,12 +1,12 @@
 pipeline {
     agent {
-        docker { image 'ubuntu:latest' }
+        docker {
+            image 'python:latest'
+        }
     }
     stages {
         stage('Install Dependencies'){
             steps{
-                sh 'sudo apt install python3'
-                sh 'sudo pip install --upgrade pip'
 		        sh 'sudo pip install -r requirements.txt'
                 sh 'wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64'
                 sh 'chmod +x ./hadolint'
