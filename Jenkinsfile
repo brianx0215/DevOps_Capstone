@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:latest'
+            args '-u root:sudo -v $HOME/workspace/'
         }
     }
     stages {
