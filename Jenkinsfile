@@ -1,18 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:latest'
-            args '-u root:root'
-        }
-    }
+    agent any
     stages {
-        stage('Install Dependencies'){
-            steps{
-		        sh 'sudo pip install -r requirements.txt'
-                sh 'wget -O ./hadolint https://github.com/hadolint/hadolint/releases/download/v1.19.0/hadolint-Linux-x86_64'
-                sh 'chmod +x ./hadolint'
-            }
-        }
         stage('Lint Files'){
             steps{
                 sh './hadolint Dockerfile'
@@ -21,12 +9,15 @@ pipeline {
         }
         stage('Build Docker'){
             steps{
-                echo 'lint'
+                sh 'docker build --tag brianx0215/uda-capstone:1.0 .'
             }
         }
-        stage('Deploy Docker'){
-            steps{
-                echo 'lint'
+        stage('Push Docker Image') {
+            steps {
+                withDockerRegistry([url: "", credentialsId: "docker-hub"]) {
+                    sh "docker tag brianx0215/uda-capstone:1.0 brianx0215/uda-capstone:1.0"
+                    sh 'docker push brianx0215/uda-capstone:1.0'
+                }
             }
         }
     }
