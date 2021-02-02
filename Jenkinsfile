@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Lint Files'){
             steps{
-                sh './hadolint Dockerfile'
+                sh 'hadolint Dockerfile'
                 sh 'pylint --disable=R,C,W1203 app.py'
             }
         }
