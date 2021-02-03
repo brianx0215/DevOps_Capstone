@@ -8,15 +8,11 @@ pipeline {
             }
         }
         stage("Build Docker Image"){
-            steps{
-                dockerImage = docker.build("brianx0215/uda-capstone:1.0")
-            }
+            dockerImage = docker.build("brianx0215/uda-capstone:1.0")
         }
         stage("Push Docker Image") {
-            steps {
-                docker.withRegistry("https://registry-1.docker.io/v2/", "docker-hub-credentials") {
-                    dockerImage.push()
-                }
+            docker.withRegistry("https://registry-1.docker.io/v2/", "dockerhub-cred") {
+                dockerImage.push()
             }
         }
         stage("Deploy Docker Image") {
