@@ -8,7 +8,6 @@ COPY ./app.py /workspace
 COPY ./requirements.txt /workspace/
 
 # Install packages from requirements.txt
-# hadolint ignore=DL3013
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
