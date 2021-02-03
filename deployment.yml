@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uda-capstone-service
+  labels:
+    app: uda-capstone-app
+spec:
+  selector:
+    app: uda-capstone-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uda-capstone-deployment
+  labels:
+    app: uda-capstone-deployment
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: uda-capstone-app
+  template:
+    metadata:
+      labels:
+        app: uda-capstone-app
+    spec:
+      containers:
+      - name: uda-capstone
+        image: brianx0215/uda-capstone:1.0
+        ports:
+        - containerPort: 80
