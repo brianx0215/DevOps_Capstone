@@ -1,24 +1,35 @@
 pipeline {
     agent any
     stages {
-        stage('Lint Files'){
+        stage("Lint Files"){
             steps{
-                sh 'hadolint Dockerfile'
-                sh 'pylint --disable=R,C,W1203 app.py'
+                sh "hadolint Dockerfile"
+                sh "pylint --disable=R,C,W1203 app.py"
             }
         }
-        stage('Build Docker'){
+        stage("Build Docker Image"){
             steps{
-                sh 'docker build --tag brianx0215/uda-capstone:1.0 .'
+                dockerImage = docker.build("brianx0215/uda-capstone:1.0")
             }
         }
-        stage('Push Docker Image') {
+        stage("Push Docker Image") {
             steps {
-                withDockerRegistry([url: "", credentialsId: "docker-hub"]) {
-                    sh "docker tag brianx0215/uda-capstone:1.0 brianx0215/uda-capstone:1.0"
-                    sh 'docker push brianx0215/uda-capstone:1.0'
+                docker.withRegistry("https://registry-1.docker.io/v2/", "docker-hub-credentials") {
+                    dockerImage.push()
                 }
             }
+        }
+        stage("Deploy Docker Image") {
+              steps{
+                  withAWS(credentials: "aws-cred", region: "eu-west-1") {
+                      sh "aws eks update-kubeconfig --region eu-west-1 --name uda-capstone-cluster"
+                      sh "kubectl config use-context arn:aws:eks:eu-west-1:569778442945:cluster/uda-capstone-cluster"
+                      sh "kubectl set image deployment/uda-capstone-deployment uda-capstone=brianx0215/uda-capstone:latest"
+                      sh "kubectl apply -f deployment.yml"
+                      sh "kubectl get nodes"
+  		              sh "kubectl get pods -o wide"
+                  }
+              }
         }
     }
 }
