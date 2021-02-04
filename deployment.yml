@@ -5,6 +5,7 @@ metadata:
   labels:
     app: uda-capstone-app
 spec:
+  type: LoadBalancer
   selector:
     app: uda-capstone-app
   ports:
