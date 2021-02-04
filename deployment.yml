@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: uda-capstone-LB
+  name: uda-capstone-entry
   labels:
     app: uda-capstone-app
 spec:
