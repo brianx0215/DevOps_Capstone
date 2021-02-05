@@ -26,12 +26,13 @@ pipeline {
         stage("Deploy Docker Image") {
             steps{
                 withAWS(credentials: "aws-cred", region: "eu-west-1") {
-                    sh "aws eks update-kubeconfig --region eu-west-1 --name uda-capstone-cluster"
-                    sh "kubectl config use-context arn:aws:eks:eu-west-1:569778442945:cluster/uda-capstone-cluster"
+                    sh "aws eks update-kubeconfig --region eu-west-1 --name uda-capstone"
+                    sh "kubectl config use-context arn:aws:eks:eu-west-1:569778442945:cluster/uda-capstone"
                     sh "kubectl apply -f deployment.yml"
+                    sh "kubectl get all"
                     sh "kubectl get nodes"
   		            sh "kubectl get pods -o wide"
-                    sh "kubectl get service/uda-capstone-service"
+                    sh "kubectl get service/uda-capstone-loadbalancer"
                 }
             }
         }
