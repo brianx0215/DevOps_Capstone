@@ -17,5 +17,3 @@ EXPOSE 80/tcp
 
 # Run app.py at container launch
 CMD ["python", "app.py"]
-
-@Intentional failure for linting demostration
