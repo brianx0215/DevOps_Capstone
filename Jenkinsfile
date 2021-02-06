@@ -10,7 +10,7 @@ pipeline {
         stage("Build Docker Image"){
             steps{
                 script{
-                    dockerImage = docker.build("brianx0215/uda-capstone:1.0")
+                    dockerImage = docker.build("brianx0215/uda-capstone:1.1")
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
                     sh "aws eks update-kubeconfig --region eu-west-1 --name uda-capstone"
                     sh "kubectl config use-context arn:aws:eks:eu-west-1:569778442945:cluster/uda-capstone"
                     sh "kubectl apply -f deployment.yml"
-                    sh "kubectl set image deployment/uda-capstone-deployment uda-capstone-backend=brianx0215/uda-capstone:1.0"
+                    sh "kubectl set image deployment/uda-capstone-deployment uda-capstone-backend=brianx0215/uda-capstone:1.1"
                     sh "kubectl get all"
                 }
             }
