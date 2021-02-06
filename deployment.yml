@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: uda-capstone-deployment
   labels:
-    app: uda-capstone-app
+    app: uda-capstone
 spec:
   replicas: 3
   strategy:
@@ -13,11 +13,11 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: uda-capstone-app
+      app: capstone
   template:
     metadata:
       labels:
-        app: uda-capstone-app
+        app: capstone
     spec:
       containers:
       - name: uda-capstone-backend
@@ -31,11 +31,11 @@ kind: Service
 metadata:
   name: uda-capstone-loadbalancer
   labels:
-    app: uda-capstone-app
+    app: capstone
 spec:
   type: LoadBalancer
   selector:
-    app: uda-capstone-app
+    app: capstone
   ports:
     - protocol: TCP
       port: 80
