@@ -8,7 +8,7 @@ LOG.setLevel(logging.INFO)
 
 @app.route("/")
 def home():
-    html = "<h3>Hello Capstone</h3>"
+    html = "<h3>Hello New Capstone</h3>"
     return html.format(format)
 
 if __name__ == "__main__":
