@@ -28,8 +28,8 @@ pipeline {
                 withAWS(credentials: "aws-cred", region: "eu-west-1") {
                     sh "aws eks update-kubeconfig --region eu-west-1 --name uda-capstone"
                     sh "kubectl config use-context arn:aws:eks:eu-west-1:569778442945:cluster/uda-capstone"
-                    sh "kubectl set image deployment/uda-capstone-deployment uda-capstone=brianx0215/uda-capstone:latest"
                     sh "kubectl apply -f deployment.yml"
+                    sh "kubectl set image deployment/uda-capstone-deployment uda-capstone=brianx0215/uda-capstone:latest"
                     sh "kubectl get all"
                     sh "kubectl get nodes"
   		            sh "kubectl get pods -o wide"
