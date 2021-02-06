@@ -2,13 +2,13 @@
 ##Introduction
 This is a capstone project for Udacity DevOps Nanodegree. The project shows a way to deploy a minimum kubernetes cluster running with a single page web application.
 
-##Overview
+## Overview
 In this project, we use Jenkins to build a private Docker image and deploy the image in Amazon Elastic Kubernetes Service. With the power of CI/CD and rolling deployment strategy, the website can have a great scalability and availability in use.
 
-##Prerequest tools on your server
+## Prerequest tools on your server
 Jenkins, docker, kubectl, eksctl, aws cli, hadolint, pylint
 
-##Steps
+## Steps
 1. [Create a Key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) on you aws web console.(The key name in this project is Udapeople)
 2. Register and Docker account and replace the name of the private docker image in [Jenkinsfile](https://github.com/brianx0215/DevOps_Capstone/blob/master/Jenkinsfile). (The image name in this project is brianx0215/uda-capstone:1.0)
 3. [Create a blue ocean pipeline](https://www.jenkins.io/doc/book/blueocean/creating-pipelines/) and link your Jenkins with the Github project. Install additional plugins(Pipeline: AWS Steps, Docker Pipeline, Blue Ocean). And set your credentials.
